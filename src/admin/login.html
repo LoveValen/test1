@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大事件-后台登录</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <!-- 1.0 导入bootstrap样式 -->
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./libs/layui/css/modules/layer/default/layer.css">
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- logo -->
+        <img class="logo" src="./images/logo.png" alt="">
+
+        <!-- 登录框 -->
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+            </div>
+            <div class="panel-body">
+                <!-- 登录框表单 -->
+                <form id="login_form" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-12 item">
+                            <input type="text" class="form-control" id="username" name="username" required
+                                placeholder="请输入用户名">
+                            <!-- 用户图标 -->
+                            <i class="glyphicon glyphicon-user"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12 item">
+                            <input type="password" class="form-control" id="password" name="password" required
+                                placeholder="请输入密码">
+                            <!-- 密码图标 -->
+                            <i class="glyphicon glyphicon-lock"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" id="login" class="btn btn-success btn-block">登录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="./libs/jquery/jquery.min.js"></script>
+    <script src="./libs/layui/lay/modules/layer.js"></script>
+    <script src="./js/login.js"></script>
+</body>
+
+</html>
