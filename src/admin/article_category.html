@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./libs/layui/css/modules/layer/default/layer.css">
     <script src="./libs/jquery/jquery.min.js"></script>
     <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./libs/layui/lay/modules/layer.js"></script>
 </head>
 
 <body>
@@ -45,14 +47,14 @@
                         </td>
                     </tr>
                 </tbody>
-                <tfoot>
+                <!-- <tfoot>
                     <tr>
                         <td colspan="3" class="text-center">
                             <a href="javascript:void(0)" class="btn btn-success" id="xinzengfenlei" data-toggle="modal"
                                 data-target="#myModal">新增分类</a>
                         </td>
                     </tr>
-                </tfoot>
+                </tfoot> -->
             </table>
         </div>
     </div>
@@ -127,12 +129,13 @@
                 <td>{{$value.name}}</td>
                 <td>{{$value.slug}}</td>
                 <td class="text-center">
-                    <a href="javascript:void(0)" onclick="searchCategory({{$value.id}})" data-target="#myModaledit" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
+                    <a href="javascript:void(0)" onclick="searchCategory({{$value.id}})"class=" btn btn-info btn-xs">编辑</a>
                     <a href="javascript:void(0)" onclick="delCategory({{$value.id}})" class="btn btn-danger btn-xs">删除</a>
                 </td>
             </tr>
         {{/each}}
     </script>
+
     <script>
         $(function () {
             getCategoryList();
@@ -150,12 +153,19 @@
 
         // 获取id查询数据
         function searchCategory(paramId) {
+            $('#myModaledit').modal('show');
             Category_id = paramId;
             myAjax(
                 'get',
                 '/admin/category/search',
                 { id: Category_id },
                 function (resData) {
+                    if (!resData.data[0] || resData.data.length <= 0) {
+                        layer.confirm('你确定要删除这条数据吗?', { icon: 1, title: '删除提示' }, function (index) {
+                            layer.close(index);
+
+                        });
+                    }
                     $('#editName').val(resData.data[0].name);
                     $('#editSlug').val(resData.data[0].slug);
                 }
@@ -222,20 +232,34 @@
 
         // 删除功能
         function delCategory(categoryId) {
-            myAjax(
-                'post',
-                '/admin/category/delete',
-                { id: categoryId },
-                function (resData) {
-                    if (resData.code == 200) {
-                        alert(resData.msg);
+            layer.confirm('你确定要删除这条数据吗?', { icon: 1, title: '删除提示' }, function (index) {
+                //do something
+                myAjax(
+                    'post',
+                    '/admin/category/delete',
+                    { id: categoryId },
+                    function (resData) {
+
+                        if (resData.code !== 200) {
+                            // alert(resData.msg);
+                            return;
+                        }
+                        layer.msg(resData.msg, {
+                            icon: 1,
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            getCategoryList();
+                        });
                     }
-                    getCategoryList();
-                }
-            );
+                );
+                layer.close(index);
+            });
+
         }
 
     </script>
+
+
 </body>
 
 </html>

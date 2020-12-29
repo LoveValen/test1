@@ -9,6 +9,10 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="admin/libs/layui/css/layui.css">
+    <link rel="stylesheet" href="admin/libs/layui/css/modules/layer/default/layer.css">
+    <script src="admin/libs/layui/layui.js"></script>
+    <script src="admin/libs/layui/lay/modules/layer.js"></script>
 </head>
 
 <body>
@@ -39,12 +43,12 @@
                 </ul>
             </div>
             <ul class="left_menu fl">
-                <li><a href="#">最 新</a></li>
+                <!-- <li><a href="#">最 新</a></li>
                 <li><a href="#">科 技</a></li>
                 <li><a href="#">股 市</a></li>
                 <li><a href="#">商 品</a></li>
                 <li><a href="#">外 汇</a></li>
-                <li><a href="#">公 司</a></li>
+                <li><a href="#">公 司</a></li> -->
             </ul>
             <ul class="right_menu fr">
                 <li><a href="#">科技专题</a></li>
@@ -55,75 +59,59 @@
 
     <div class="main_con clearfix">
         <div class="left_con setfr">
-            <div class="breadcrumb">
-                当前位置： <a href="#">首页</a> &gt; <a href="#">科技</a> &gt; 文章详情
+            <!-- 放文章的容器 -->
+            <div id="article_content">
+                <!-- <div class="breadcrumb">
+                    当前位置： <a href="#">首页</a> &gt; <a href="#">科技</a> &gt; 文章详情
+                </div>
+                <h3 class="article_title">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</h3>
+                <div class="article_info">杰克 发布于 2019-05-08 07:08:46&nbsp;&nbsp;&nbsp;分类: 奇趣事&nbsp;&nbsp;&nbsp;阅读:
+                    (98)&nbsp;&nbsp;&nbsp;评论: (0)</div>
+                <div class="article_con">
+
+                    <p>“上天入地”还不够？硅谷“钢铁侠”马斯克名下一家低调的公司最近又融了一大笔钱。</p>
+
+                    <p>马斯克投资的一家小型且不为人熟知的脑机接口（brain-computer
+                        interface）公司Neuralink披露，该公司融到了3900万美元，虽然不及公司计划的融资额5100万美元，但也比上次的融资多了不少。</p>
+
+                    <p>两年前该公司曾计划融资1亿美元，但只拿到了2700万美元的融资。</p>
+
+                    <p>在Neuralink递交给美国证券交易委员会（SEC）的材料中，并没有披露融资是否来自传统的风险投资者或者来自该公司的员工。</p>
+
+                    <p>2016年，Neuralink在美国加利福尼亚州以医学研究公司的名义成立，之后一直低调运行。</p>
+
+                </div>
+                <div class="article_links">
+                    上一篇： <a href="#">世界第一台可以玩游戏的冰箱</a><br>
+                    下一篇： <a href="#">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a>
+                </div> -->
             </div>
-            <h3 class="article_title">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</h3>
-            <div class="article_info">杰克 发布于 2019-05-08 07:08:46&nbsp;&nbsp;&nbsp;分类: 奇趣事&nbsp;&nbsp;&nbsp;阅读:
-                (98)&nbsp;&nbsp;&nbsp;评论: (0)</div>
-            <div class="article_con">
-
-                <p>“上天入地”还不够？硅谷“钢铁侠”马斯克名下一家低调的公司最近又融了一大笔钱。</p>
-
-                <p>马斯克投资的一家小型且不为人熟知的脑机接口（brain-computer
-                    interface）公司Neuralink披露，该公司融到了3900万美元，虽然不及公司计划的融资额5100万美元，但也比上次的融资多了不少。</p>
-
-                <p>两年前该公司曾计划融资1亿美元，但只拿到了2700万美元的融资。</p>
-
-                <p>在Neuralink递交给美国证券交易委员会（SEC）的材料中，并没有披露融资是否来自传统的风险投资者或者来自该公司的员工。</p>
-
-                <p>2016年，Neuralink在美国加利福尼亚州以医学研究公司的名义成立，之后一直低调运行。</p>
-
-            </div>
-            <div class="article_links">
-                上一篇： <a href="#">世界第一台可以玩游戏的冰箱</a><br>
-                下一篇： <a href="#">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a>
-            </div>
-
             <form action="" class="comment_form">
                 <div class="form_group">
                     <label>用户名：</label>
-                    <input type="text" placeholder="请输入用户名" class="comment_name">
+                    <input type="text" placeholder="请输入用户名" class="comment_name" id="username">
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" class="comment_input" id="comment"></textarea>
                 </div>
                 <div class="form_group">
-                    <input type="submit" name="" value="评 论" class="comment_sub"></div>
+                    <input type="submit" name="" value="评 论" class="comment_sub">
+                </div>
             </form>
 
-            <div class="comment_count">
-                4条评论
-            </div>
+            <div id="com_content">
+                <div class="comment_count">
+                    4条评论
+                </div>
 
-            <div class="comment_list_con">
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">乔</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">段</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">虚</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">王</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
+                <div class="comment_list_con">
+                    <div class="comment_detail_list">
+                        <div class="person_pic fl">乔</div>
+                        <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
+                        <div class="comment_text fl">
+                            遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,7 +119,7 @@
         <div class="right_con setfl">
             <div class="common_wrap">
                 <h3><i class="fa fa-bar-chart"></i> 一周热门排行</h3>
-                <ul class="content_list">
+                <ul class="content_list hotrank_list">
                     <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
                     <li><span class="second">2</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><span class="third">3</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
@@ -208,7 +196,208 @@
     <!-- 引入模板引擎js文件 -->
     <script src="./js/template-web.js"></script>
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <!-- 导航栏 -->
+    <script id="navigation_tpl" type="text/html">
+            {{each data}}
+                <li><a href="./list.html?id={{$value.id}}">{{$value.name}}</a></li>
+            {{/each}}
+        </script>
+    <!-- 一周热门排行 -->
+    <script id="hotList_tpl" type="text/html">
+            {{each data}}
+                <li><span>{{$index +1}}</span><a href="#">{{$value.title}}</a></li>
+            {{/each}}
+        </script>
+    <!-- 最新评论 -->
+    <script id="comments_tpl" type="text/html">
+            {{each data}}
+            <li>
+                <span>{{$value.author[0]}}</span>
+                <b><em>{{$value.author}}</em>{{$value.date}}({{$value.time}})说:</b>
+                <strong>{{$value.intro}}</strong>
+            </li>
+            {{/each}}
+        </script>
+    <!-- 焦点关注 -->
+    <script id="focus_tpl" type="text/html">
+            {{each data}}
+            <li><a href="#">{{$value.intro}}</a></li>
+            {{/each}}
+        </script>
+    <!-- 文章详细内容 -->
+    <script id="article_tpl" type="text/html">
+        <div class="breadcrumb">
+            当前位置： <a href="#">首页</a> &gt; <a href="#">{{type}}</a> &gt; 文章详情
+        </div>
+        <h3 class="article_title">{{title}}</h3>
+        <div class="article_info">{{author}} 发布于 2019-05-08 07:08:46&nbsp;&nbsp;&nbsp;分类: {{type}}&nbsp;&nbsp;&nbsp;阅读:
+            ({{read}})&nbsp;&nbsp;&nbsp;评论: ({{comments}})</div>
+        <div class="article_con">
 
+            <p>{{@ content}}</p>
+
+        </div>
+        <div class="article_links">
+            上一篇： <a href="./article.html?id={{prev['id']}}">{{prev['title']}}</a><br>
+            下一篇： <a href="./article.html?id={{next['id']}}">{{next['title']}}</a>
+        </div>
+    </script>
+    <!-- 评论列表 -->
+    <script id="commentList_tpl" type="text/html">
+        <div class="comment_count">
+            4条评论
+        </div>
+        {{each data}}
+        <div class="comment_list_con">
+            <div class="comment_detail_list">
+                <div class="person_pic fl">{{$value.author[0]}}</div>
+                <div class="name_time fl"><b>{{$value.author}}</b><span>{{$value.date}}</span></div>
+                <div class="comment_text fl">
+                    {{$value.content}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <script>
+        $(function () {
+            $('.search_txt').focusin(function () {
+                $('.search_txt').prop('placeholder', '');
+            }).focusout(function () {
+                $('.search_txt').prop('placeholder', '黑洞照片');
+            });
+            // 搜索
+            $('.search_btn').click(function () {
+                search();
+            });
+            // 文章类别
+            category();
+            // 一周热门排行
+            hotList();
+            // 最新评论
+            comments();
+            // 焦点关注
+            focusList();
+            // 文章内容
+            artivle();
+            // 获取评论
+            getComments();
+            // 评论
+            $('.comment_sub').click(function (e) {
+                e.preventDefault();
+                review();
+            });
+        });
+
+        // 文章分类
+        function category() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/api/v1/index/category',
+                data: null,
+                success: function (resData) {
+                    let navgationHtml = template('navigation_tpl', resData);
+                    $('.left_menu').append(navgationHtml);
+                }
+            });
+        }
+
+        // 一周热门排行
+        function hotList() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/api/v1/index/rank',
+                data: null,
+                success: function (resData) {
+                    let hotListHtml = template('hotList_tpl', resData);
+                    $('.hotrank_list').html(hotListHtml);
+                    $('.hotrank_list>li').eq(0).find('span').addClass('first');
+                    $('.hotrank_list>li').eq(1).find('span').addClass('second');
+                    $('.hotrank_list>li').eq(2).find('span').addClass('third');
+                }
+            });
+        }
+
+        // 最新评论
+        function comments() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/api/v1/index/latest_comment',
+                data: null,
+                success: function (resData) {
+                    let comHtml = template('comments_tpl', resData);
+                    $('.comment_list').html(comHtml);
+                }
+            });
+        }
+
+        // 焦点关注
+        function focusList() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/api/v1/index/attention',
+                data: null,
+                success: function (resData) {
+                    let focusHtml = template('focus_tpl', resData);
+                    $('.guanzhu_list').html(focusHtml);
+                }
+            });
+        }
+
+        let art_id;
+        // 文章详细内容
+        function artivle() {
+            // 获取id
+            let c_id = location.href.split('=')[1];
+            art_id = c_id;
+            console.log(c_id);
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/api/v1/index/article',
+                data: { id: c_id },
+                success: function (resData) {
+                    let resHtml = template('article_tpl', resData.data);
+                    $('#article_content').html(resHtml);
+                }
+            });
+        }
+
+        // 获取评论
+        function getComments() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/api/v1/index/get_comment',
+                data: { articleId: art_id },
+                success: function (resData) {
+                    console.log(resData);
+                    let resHtml = template('commentList_tpl', resData);
+                    $('#com_content').html(resHtml);
+                    $('.comment_count').html(resData.data.length);
+                }
+            });
+        }
+
+        // 评论
+        function review() {
+            console.log($('#username').val());
+            let userNameVal = $('#username').val();
+            let contentVal = $('#comment').val();
+            let params = {
+                author: userNameVal,
+                content: contentVal,
+                articleId: art_id
+            };
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/api/v1/index/post_comment',
+                data: params,
+                success: function (resData) {
+                    layer.msg(resData.msg);
+                    comments();
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

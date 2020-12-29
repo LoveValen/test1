@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/iconfont.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="./libs/jquery-1.12.4.min.js"></script>
+    <script src="./libs/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="./libs/echarts.js"></script>
 </head>
 
@@ -19,25 +19,25 @@
         <div class="row spannel_list">
             <div class="col-sm-3 col-xs-6">
                 <div class="spannel">
-                    <em>10015</em><span>篇</span>
+                    <em id="c_count">10015</em><span>篇</span>
                     <b>总文章数</b>
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">
                 <div class="spannel scolor01">
-                    <em>123</em><span>篇</span>
+                    <em id="new_c_count">123</em><span>篇</span>
                     <b>日新增文章数</b>
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">
                 <div class="spannel scolor02">
-                    <em>35</em><span>条</span>
+                    <em id="comments">35</em><span>条</span>
                     <b>评论总数</b>
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">
                 <div class="spannel scolor03">
-                    <em>123</em><span>条</span>
+                    <em id="new_com_count">123</em><span>条</span>
                     <b>日新增评论数</b>
                 </div>
             </div>
@@ -58,6 +58,287 @@
     <div class="container-fluid">
         <div class="column_pannel" id="column_show"></div>
     </div>
+
+    <script src="./js/https.js"></script>
+    <script>
+        $(function () {
+            get_spannel_list();
+            get_article();
+            get_category();
+            get_visit();
+        });
+
+        function get_spannel_list() {
+            myAjax(
+                'get',
+                '/admin/data/info',
+                null,
+                function (resData) {
+                    $('#c_count').html(resData.totalArticle);
+                    $('#new_c_count').html(resData.dayArticle);
+                    $('#comments').html(resData.totalComment);
+                    $('#new_com_count').html(resData.dayComment);
+                }
+            );
+        }
+
+        // 获取文章日增趋势数据->折线图
+        function get_article() {
+            myAjax(
+                'get',
+                '/admin/data/article',
+                null,
+                function (resData) {
+                    let dateArr = resData.date.map(item => item.date);
+                    let countArr = resData.date.map(item => item.count);
+                    curve_show(dateArr, countArr);
+                }
+            );
+
+        }
+
+        //获取文章分类数据->饼状图
+        function get_category() {
+            myAjax(
+                'get',
+                '/admin/data/category',
+                null,
+                function (resData) {
+                    let nameArr = resData.date.map(item => item.name);
+                    let dataArr = resData.date.map(item => ({ value: item.articles, name: item.name }));
+                    pie_show(nameArr, dataArr);
+                }
+            );
+        }
+
+        // 获取日文章的访问量->柱状图
+        function get_visit() {
+            myAjax(
+                'get',
+                '/admin/data/visit',
+                null,
+                function (resData) {
+                    let dateArr = [];
+                    let date = [];
+                    for (let key in resData.data) {
+                        dateArr.push(key);
+                        date.push(resData.data[key]);
+                    }
+                    console.log(dateArr);
+                    console.log(date);
+                    column_show(dateArr, date);
+                }
+            );
+        }
+
+        // 折线图
+        function curve_show(xarrDate, count) {
+            let myEchart = echarts.init(document.querySelector('#curve_show'));
+            let option = {
+                title: {
+                    text: '文章日新增趋势',
+                    left: 'center'
+                },
+                // 提示
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                // 网格
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: "category",
+                    boundaryGap: false,
+                    data: xarrDate //["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                },
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [{
+                    data: count,//[820, 932, 901, 934, 1290, 1330, 1320],
+                    type: "line",
+                    smooth: true,
+                    // 区域渐变色
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                { offset: 0, color: 'red' },
+                                { offset: 0.5, color: 'tomato' },
+                                { offset: 1, color: '#eee' }
+                            ]
+                        )
+                    },
+                    // 显示每个点的数据
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                }]
+            };
+            myEchart.setOption(option);
+        }
+
+        // 饼状图
+        function pie_show(nameArr, dataArr) {
+            let myEchart = echarts.init(document.querySelector('#pie_show'));
+            let option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                },
+                legend: {
+                    left: 10,
+                    data: nameArr//['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                },
+                series: [
+                    {
+                        name: '分类数据',
+                        type: 'pie',
+                        radius: ['40%', '60%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: true,
+                        },
+                        labelLine: {
+                            show: true
+                        },
+                        // data: [
+                        //     { value: 335, name: '直接访问' },
+                        //     { value: 310, name: '邮件营销' },
+                        //     { value: 234, name: '联盟广告' },
+                        //     { value: 135, name: '视频广告' },
+                        //     { value: 1548, name: '搜索引擎' }
+                        // ]
+                        data: dataArr
+                    }
+                ]
+            };
+            myEchart.setOption(option);
+        }
+
+        // 柱状图
+        function column_show(dateArr, date) {
+            let myEchart = echarts.init(document.querySelector('#column_show'));
+
+            let dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
+            let data = date//[220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+            let yMax = 20000;
+            let dataShadow = [];
+
+            for (let i = 0; i < data.length; i++) {
+                dataShadow.push(yMax);
+            }
+
+            let option = {
+                title: {
+                    text: '特性示例：渐变色 阴影 点击缩放',
+                    subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+                },
+                xAxis: {
+                    data: dateArr,
+                    axisLabel: {
+                        inside: true,
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    z: 10
+                },
+                yAxis: {
+                    // data: date,
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#999'
+                        }
+                    }
+                },
+                dataZoom: [
+                    {
+                        type: 'inside'
+                    }
+                ],
+                series: [
+                    { // For shadow
+                        type: 'bar',
+                        itemStyle: {
+                            color: 'rgba(0,0,0,0.05)'
+                        },
+                        barGap: '-100%',
+                        barCategoryGap: '40%',
+                        data: dataShadow,
+                        animation: false
+                    },
+                    {
+                        type: 'bar',
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    { offset: 0, color: '#83bff6' },
+                                    { offset: 0.5, color: '#188df0' },
+                                    { offset: 1, color: '#188df0' }
+                                ]
+                            )
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                color: new echarts.graphic.LinearGradient(
+                                    0, 0, 0, 1,
+                                    [
+                                        { offset: 0, color: '#2378f7' },
+                                        { offset: 0.7, color: '#2378f7' },
+                                        { offset: 1, color: '#83bff6' }
+                                    ]
+                                )
+                            }
+                        },
+                        data: data
+                    }
+                ]
+            };
+
+            // Enable data zoom when user click bar.
+            var zoomSize = 6;
+            myEchart.on('click', function (params) {
+                console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+                myEchart.dispatchAction({
+                    type: 'dataZoom',
+                    startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+                    endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+                });
+            });
+
+            myEchart.setOption(option);
+        }
+
+    </script>
 </body>
 
 </html>
